@@ -6,53 +6,150 @@
   <title>Programa Sugerido Multicomponente Integrativo</title>
   <style>
     :root{
-      --bg:#f8fafc; --card:#ffffff; --line:#dbe4ee; --text:#1e293b;
-      --muted:#475569; --brand:#0f766e; --brand2:#2563eb;
+      --bg:#f8fafc;
+      --card:#ffffff;
+      --line:#dbe4ee;
+      --text:#1e293b;
+      --muted:#475569;
+      --brand:#0f766e;
+      --brand2:#2563eb;
     }
     *{box-sizing:border-box}
     body{
-      margin:0; background:linear-gradient(180deg,#f8fafc,#eef2ff);
-      color:var(--text); font-family:Arial,Helvetica,sans-serif; line-height:1.65;
+      margin:0;
+      background:linear-gradient(180deg,#f8fafc,#eef2ff);
+      color:var(--text);
+      font-family:Arial,Helvetica,sans-serif;
+      line-height:1.65;
     }
-    .container{max-width:1100px; margin:0 auto; padding:28px 18px 56px}
+    .container{max-width:1100px;margin:0 auto;padding:28px 18px 56px}
     header{
       background:linear-gradient(135deg,var(--brand),var(--brand2));
-      color:#fff; border-radius:18px; padding:28px 26px; box-shadow:0 10px 24px rgba(15,23,42,.12);
+      color:#fff;
+      border-radius:18px;
+      padding:28px 26px;
+      box-shadow:0 10px 24px rgba(15,23,42,.12);
     }
-    header h1{margin:0 0 8px; font-size:2rem}
-    header p{margin:0; max-width:900px}
+    header h1{margin:0 0 8px;font-size:2rem}
+    header p{margin:0;max-width:900px}
     .nav{
-      margin:18px 0 8px; display:flex; flex-wrap:wrap; gap:10px;
+      margin:18px 0 8px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
     }
     .nav a{
-      text-decoration:none; color:#0f172a; background:#fff; border:1px solid var(--line);
-      padding:10px 14px; border-radius:999px; font-size:.95rem
+      text-decoration:none;
+      color:#0f172a;
+      background:#fff;
+      border:1px solid var(--line);
+      padding:10px 14px;
+      border-radius:999px;
+      font-size:.95rem
     }
     .section{
-      background:var(--card); border:1px solid var(--line); border-radius:18px;
-      padding:22px; margin-top:18px; box-shadow:0 6px 18px rgba(15,23,42,.05);
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:22px;
+      margin-top:18px;
+      box-shadow:0 6px 18px rgba(15,23,42,.05);
     }
-    .section h2{margin-top:0; color:#0f172a; font-size:1.45rem}
-    .section h3{color:#0f172a; margin-bottom:8px}
+    .section h2{margin-top:0;color:#0f172a;font-size:1.45rem}
+    .section h3{color:#0f172a;margin-bottom:8px}
     .badge{
-      display:inline-block; background:#ecfeff; color:#155e75; border:1px solid #a5f3fc;
-      padding:5px 10px; border-radius:999px; font-size:.9rem; margin-bottom:10px
+      display:inline-block;
+      background:#ecfeff;
+      color:#155e75;
+      border:1px solid #a5f3fc;
+      padding:5px 10px;
+      border-radius:999px;
+      font-size:.9rem;
+      margin-bottom:10px
     }
-    table{width:100%; border-collapse:collapse; margin-top:10px; overflow:hidden; border-radius:12px}
-    th,td{border:1px solid var(--line); padding:10px; vertical-align:top; text-align:left}
+    table{
+      width:100%;
+      border-collapse:collapse;
+      margin-top:10px;
+      overflow:hidden;
+      border-radius:12px
+    }
+    th,td{
+      border:1px solid var(--line);
+      padding:10px;
+      vertical-align:top;
+      text-align:left
+    }
     th{background:#e2e8f0}
-    .note{color:var(--muted); font-size:.96rem}
-    .grid{display:grid; grid-template-columns:1fr 1fr; gap:16px}
+    .note{color:var(--muted);font-size:.96rem}
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
     .card{
-      background:#f8fafc; border:1px solid var(--line); border-radius:14px; padding:16px;
+      background:#f8fafc;
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:16px;
     }
     pre{
-      white-space:pre-wrap; word-wrap:break-word; background:#0f172a; color:#e2e8f0;
-      padding:16px; border-radius:14px; overflow:auto;
+      white-space:pre-wrap;
+      word-wrap:break-word;
+      background:#0f172a;
+      color:#e2e8f0;
+      padding:16px;
+      border-radius:14px;
+      overflow:auto;
     }
     ul{margin:10px 0 0 20px}
     li{margin:6px 0}
-    @media (max-width:800px){.grid{grid-template-columns:1fr}}
+    .btn-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
+    .btn{
+      border:none;
+      border-radius:12px;
+      padding:12px 16px;
+      cursor:pointer;
+      font-size:0.98rem;
+      color:#fff;
+      background:linear-gradient(135deg,var(--brand),var(--brand2));
+      box-shadow:0 8px 18px rgba(37,99,235,.18);
+    }
+    .btn.secondary{
+      background:linear-gradient(135deg,#334155,#0f172a);
+    }
+    .popup{
+      display:none;
+      position:fixed;
+      inset:0;
+      background:rgba(15,23,42,.6);
+      padding:18px;
+      z-index:9999;
+      overflow:auto;
+    }
+    .popup-inner{
+      max-width:1050px;
+      margin:24px auto;
+      background:#fff;
+      border-radius:18px;
+      padding:20px;
+      box-shadow:0 20px 40px rgba(0,0,0,.25);
+    }
+    .popup-header{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      margin-bottom:12px;
+    }
+    .close-btn{
+      border:none;
+      border-radius:10px;
+      padding:10px 14px;
+      cursor:pointer;
+      background:#dc2626;
+      color:#fff;
+    }
+    @media (max-width:800px){
+      .grid{grid-template-columns:1fr}
+      header h1{font-size:1.6rem}
+    }
   </style>
 </head>
 <body>
@@ -61,6 +158,10 @@
 <header>
   <h1>Programa Sugerido Multicomponente Integrativo</h1>
   <p>Desnutrición y anemia infantil: implicancias psicológicas, propuesta de intervención de 8 semanas, adaptación rural, tamizaje en primer nivel de atención y detección temprana escolar.</p>
+  <div class="btn-row">
+    <button class="btn" onclick="openFormats()">Abrir formatos semiestructurados</button>
+    <button class="btn secondary" onclick="openPrompt()">Abrir prompt reutilizable</button>
+  </div>
 </header>
 
 <div class="nav">
@@ -70,7 +171,6 @@
   <a href="#primernivel">Primer nivel</a>
   <a href="#escolar">Detección escolar</a>
   <a href="#piloto">Validación piloto</a>
-  <a href="#prompt">Prompt</a>
 </div>
 
 <section id="fundamento" class="section">
@@ -104,7 +204,6 @@
   <h2>2. Programa de intervención de 8 semanas</h2>
   <p><strong>Objetivo general:</strong> reducir el impacto emocional, cognitivo y escolar asociado a la desnutrición y la anemia, fortaleciendo al niño, la familia y la escuela.</p>
   <p class="note">La secuencia sigue una lógica preventiva: detección, psicoeducación, regulación emocional, estimulación, socialización, apoyo escolar, fortalecimiento familiar y reevaluación.</p>
-
   <table>
     <thead>
       <tr>
@@ -265,12 +364,216 @@
   </ul>
 </section>
 
-<section id="prompt" class="section">
-  <span class="badge">Prompt reutilizable</span>
-  <h2>7. Prompt final</h2>
-  <pre>Actúa como un catedrático investigador en psicología social preventiva. Redacta un programa integral sobre las implicancias psicológicas y emocionales de la desnutrición y la anemia infantil. Incluye: 1) análisis de efectos cognitivos, emocionales, sociales y escolares; 2) programa de intervención de 8 semanas con fundamentación académica por semana; 3) adaptación para contexto rural; 4) ficha breve para el primer nivel de atención con señales de riesgo nutricional y conductual; 5) programa escolar de detección temprana con tamizaje en aula, semáforo de riesgo y derivación a salud; 6) propuesta piloto que requiera validación con muestra pequeña; 7) referencias en formato APA. El estilo debe ser académico, claro, aplicable y preventivo.</pre>
-</section>
+<div id="formatsPopup" class="popup" aria-hidden="true">
+  <div class="popup-inner">
+    <div class="popup-header">
+      <h2 style="margin:0">Formatos semiestructurados</h2>
+      <button class="close-btn" onclick="closeFormats()">Cerrar</button>
+    </div>
+    <section class="section" style="margin-top:0">
+      <h3>1. Ficha semiestructurada de tamizaje escolar</h3>
+      <pre>FICHA SEMIESTRUCTURADA DE TAMIZAJE ESCOLAR
+
+I. Identificación
+- Nombre del estudiante:
+- Edad:
+- Grado/sección:
+- Institución educativa:
+- Fecha:
+- Docente o tutor que reporta:
+- Motivo de observación:
+
+II. Observación del estado general
+- Apariencia física:
+- Energía y disposición:
+- Postura y movimiento:
+- Contacto visual:
+- Participación en clase:
+
+III. Señales nutricionales visibles
+- Palidez: Sí / No / No evidente
+- Fatiga: Sí / No / No evidente
+- Bajo apetito referido: Sí / No / No evidente
+- Pérdida de peso o delgadez aparente: Sí / No / No evidente
+- Enfermedades frecuentes: Sí / No / No evidente
+
+IV. Funcionamiento escolar
+- Atención sostenida:
+- Seguimiento de instrucciones:
+- Finalización de tareas:
+- Lenguaje expresivo/comprensivo:
+- Rendimiento comparado con el grupo:
+
+V. Conducta y emociones
+- Irritabilidad:
+- Tristeza:
+- Aislamiento:
+- Llanto fácil:
+- Inquietud:
+- Bajo interés por el juego:
+
+VI. Interpretación inicial del docente
+- Riesgo bajo / moderado / alto
+- Observaciones adicionales:
+
+VII. Acción sugerida
+- Observación en aula
+- Entrevista con familia
+- Derivación a salud
+- Seguimiento en tutoría
+
+Firma del docente/tutor:
+Firma del responsable de la derivación:</pre>
+    </section>
+
+    <section class="section">
+      <h3>2. Ficha semiestructurada para entrevista familiar</h3>
+      <pre>FICHA SEMIESTRUCTURADA DE ENTREVISTA FAMILIAR
+
+I. Datos generales
+- Nombre del niño:
+- Nombre del cuidador:
+- Relación con el niño:
+- Dirección/comunidad:
+- Número de contacto:
+- Fecha:
+
+II. Composición y dinámica familiar
+- Integrantes del hogar:
+- Quién prepara los alimentos:
+- Quién acompaña al niño en tareas y rutinas:
+- Red de apoyo:
+
+III. Alimentación y cuidado
+- Número de comidas al día:
+- Consumo de alimentos ricos en hierro:
+- Cambios recientes en apetito:
+- Acceso a agua segura:
+- Dificultades para comprar alimentos:
+
+IV. Salud y desarrollo
+- Antecedentes de anemia o desnutrición:
+- Enfermedades recientes:
+- Controles médicos previos:
+- Suplementación o tratamiento actual:
+- Sueño y descanso:
+
+V. Área emocional y conductual
+- Cambios de ánimo:
+- Irritabilidad o llanto:
+- Interés por jugar:
+- Relación con hermanos y pares:
+- Conductas regresivas:
+
+VI. Barreras para la recuperación
+- Económicas:
+- Geográficas:
+- Culturales/idiomáticas:
+- Organizacionales:
+- De tiempo o trabajo familiar:
+
+VII. Acuerdos
+- Compromisos del cuidador:
+- Compromisos del equipo:
+- Fecha de seguimiento:
+- Derivación realizada:</pre>
+    </section>
+
+    <section class="section">
+      <h3>3. Ficha semiestructurada de evaluación integral</h3>
+      <pre>FICHA SEMIESTRUCTURADA DE EVALUACIÓN INTEGRAL
+
+I. Identificación
+- Nombre:
+- Edad:
+- Sexo:
+- Fecha:
+- Evaluador/es:
+
+II. Motivo de evaluación
+- Sospecha de anemia
+- Sospecha de desnutrición
+- Bajo rendimiento escolar
+- Problema conductual/emocional
+- Control de seguimiento
+
+III. Hallazgos clínicos y observacionales
+- Palidez:
+- Fatiga:
+- Peso/talla:
+- Apetito:
+- Sueño:
+- Infecciones recurrentes:
+
+IV. Área cognitiva y escolar
+- Atención:
+- Memoria:
+- Lenguaje:
+- Participación:
+- Rendimiento:
+
+V. Área emocional y social
+- Estado de ánimo:
+- Irritabilidad:
+- Apego y vínculo:
+- Relación con pares:
+- Juego y sociabilidad:
+
+VI. Factores familiares y sociales
+- Seguridad alimentaria:
+- Apoyo del hogar:
+- Estrés familiar:
+- Acceso a salud:
+- Condiciones rurales/comunitarias:
+
+VII. Plan de intervención
+- Acciones educativas:
+- Acciones psicológicas:
+- Derivación médica/nutricional:
+- Seguimiento:
+- Fecha de reevaluación:</pre>
+    </section>
+  </div>
+</div>
+
+<div id="promptPopup" class="popup" aria-hidden="true">
+  <div class="popup-inner">
+    <div class="popup-header">
+      <h2 style="margin:0">Prompt reutilizable</h2>
+      <button class="close-btn" onclick="closePrompt()">Cerrar</button>
+    </div>
+    <section class="section" style="margin-top:0">
+      <pre>Actúa como un catedrático investigador en psicología social preventiva y salud comunitaria. Redacta un programa sugerido multicomponente integrativo sobre las implicancias psicológicas y emocionales de la desnutrición y la anemia infantil. Incluye: 1) análisis de efectos cognitivos, emocionales, sociales y escolares; 2) programa de intervención de 8 semanas con fundamentación académica por semana; 3) adaptación para contexto rural; 4) funciones por profesional (maestro, nutricionista, médico general, trabajadora social y psicólogo); 5) fichas semiestructuradas de tamizaje escolar, entrevista familiar y evaluación integral; 6) criterios de derivación y seguimiento; 7) propuesta piloto si no hay validación; 8) referencias en formato APA. El estilo debe ser académico, claro, aplicable y preventivo.</pre>
+    </section>
+  </div>
+</div>
+
+<script>
+function openFormats(){
+  const p = document.getElementById('formatsPopup');
+  p.style.display = 'block';
+  p.setAttribute('aria-hidden','false');
+}
+function closeFormats(){
+  const p = document.getElementById('formatsPopup');
+  p.style.display = 'none';
+  p.setAttribute('aria-hidden','true');
+}
+function openPrompt(){
+  const p = document.getElementById('promptPopup');
+  p.style.display = 'block';
+  p.setAttribute('aria-hidden','false');
+}
+function closePrompt(){
+  const p = document.getElementById('promptPopup');
+  p.style.display = 'none';
+  p.setAttribute('aria-hidden','true');
+}
+window.addEventListener('keydown', function(e){
+  if(e.key === 'Escape'){ closeFormats(); closePrompt(); }
+});
+</script>
 
 </div>
 </body>
-                         </html>
+          </html>
