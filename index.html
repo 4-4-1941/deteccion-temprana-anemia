@@ -1,1 +1,276 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Programa Integral: Desnutrición y Anemia Infantil</title>
+<style>
+:root{
+  --bg:#f8fafc; --card:#ffffff; --line:#dbe4ee; --text:#1e293b;
+  --muted:#475569; --brand:#0f766e; --brand2:#2563eb;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; background:linear-gradient(180deg,#f8fafc,#eef2ff);
+  color:var(--text); font-family:Arial,Helvetica,sans-serif; line-height:1.65;
+}
+.container{max-width:1100px; margin:0 auto; padding:28px 18px 56px}
+header{
+  background:linear-gradient(135deg,var(--brand),var(--brand2));
+  color:#fff; border-radius:18px; padding:28px 26px; box-shadow:0 10px 24px rgba(15,23,42,.12);
+}
+header h1{margin:0 0 8px; font-size:2rem}
+header p{margin:0; max-width:900px}
+.nav{
+  margin:18px 0 8px; display:flex; flex-wrap:wrap; gap:10px;
+}
+.nav a{
+  text-decoration:none; color:#0f172a; background:#fff; border:1px solid var(--line);
+  padding:10px 14px; border-radius:999px; font-size:.95rem;
+}
+.section{
+  background:var(--card); border:1px solid var(--line); border-radius:18px;
+  padding:22px; margin-top:18px; box-shadow:0 6px 18px rgba(15,23,42,.05);
+}
+.section h2{margin-top:0; color:#0f172a; font-size:1.45rem}
+.section h3{color:#0f172a; margin-bottom:8px}
+.badge{
+  display:inline-block; background:#ecfeff; color:#155e75; border:1px solid #a5f3fc;
+  padding:5px 10px; border-radius:999px; font-size:.9rem; margin-bottom:10px
+}
+table{width:100%; border-collapse:collapse; margin-top:10px; overflow:hidden; border-radius:12px}
+th,td{border:1px solid var(--line); padding:10px; vertical-align:top; text-align:left}
+th{background:#e2e8f0}
+.note{color:var(--muted); font-size:.96rem}
+.grid{display:grid; grid-template-columns:1fr 1fr; gap:16px}
+.card{
+  background:#f8fafc; border:1px solid var(--line); border-radius:14px; padding:16px;
+}
+pre{
+  white-space:pre-wrap; word-wrap:break-word; background:#0f172a; color:#e2e8f0;
+  padding:16px; border-radius:14px; overflow:auto;
+}
+ul{margin:10px 0 0 20px}
+li{margin:6px 0}
+@media (max-width:800px){.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="container">
 
+<header>
+  <h1>Programa Integral de Intervención Psicosocial y Escolar</h1>
+  <p>Desnutrición y anemia infantil: implicancias psicológicas, propuesta de intervención de 8 semanas, adaptación rural, tamizaje en primer nivel de atención y detección temprana escolar.</p>
+</header>
+
+<div class="nav">
+  <a href="#fundamento">Fundamento</a>
+  <a href="#programa8">Programa 8 semanas</a>
+  <a href="#rural">Contexto rural</a>
+  <a href="#primernivel">Primer nivel</a>
+  <a href="#escolar">Detección escolar</a>
+  <a href="#piloto">Validación piloto</a>
+  <a href="#prompt">Prompt</a>
+</div>
+
+<section id="fundamento" class="section">
+  <span class="badge">Fundamento teórico</span>
+  <h2>1. Implicancias psicológicas y emocionales</h2>
+  <p>La desnutrición y la anemia infantil pueden comprometer el desarrollo cognitivo, motor, emocional y social. En la práctica, esto se observa como fatiga persistente, menor exploración del entorno, apatía, irritabilidad, dificultades atencionales y bajo rendimiento escolar. La literatura internacional y regional destaca que la anemia y la malnutrición no solo afectan el crecimiento físico, sino también la capacidad del niño para aprender, regularse y vincularse de forma adaptativa.</p>
+  <div class="grid">
+    <div class="card">
+      <h3>Efectos frecuentes</h3>
+      <ul>
+        <li>Disminución de energía y resistencia física.</li>
+        <li>Menor atención sostenida y lentitud en el procesamiento.</li>
+        <li>Irritabilidad, llanto fácil y baja tolerancia a la frustración.</li>
+        <li>Retraimiento social y menor participación en el juego.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Riesgos asociados</h3>
+      <ul>
+        <li>Retraso en lenguaje y psicomotricidad.</li>
+        <li>Dificultades en aprendizaje básico.</li>
+        <li>Problemas de interacción con pares y adultos.</li>
+        <li>Vulnerabilidad a problemas emocionales secundarios.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="programa8" class="section">
+  <span class="badge">Intervención</span>
+  <h2>2. Programa de intervención de 8 semanas</h2>
+  <p><strong>Objetivo general:</strong> reducir el impacto emocional, cognitivo y escolar asociado a la desnutrición y la anemia, fortaleciendo al niño, la familia y la escuela.</p>
+  <p class="note">La secuencia sigue una lógica preventiva: detección, psicoeducación, regulación emocional, estimulación, socialización, apoyo escolar, fortalecimiento familiar y reevaluación.</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Semana</th>
+        <th>Eje</th>
+        <th>Fundamento académico</th>
+        <th>Actividades</th>
+        <th>Resultado esperado</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1</td>
+        <td>Evaluación inicial</td>
+        <td>La intervención preventiva debe comenzar con una línea de base para identificar magnitud del riesgo nutricional, emocional y educativo.</td>
+        <td>Tamizaje, entrevista a cuidadores, observación conductual, revisión escolar y clasificación de riesgo.</td>
+        <td>Perfil inicial del niño y priorización del caso.</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>Psicoeducación</td>
+        <td>Comprender el problema favorece la adherencia familiar y reduce la tendencia a interpretar erróneamente el bajo rendimiento como “desinterés”.</td>
+        <td>Explicación sobre anemia, desnutrición, alimentación, rutinas y señales de alarma.</td>
+        <td>Familia informada y con mayor disposición al seguimiento.</td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td>Vínculo y co-regulación</td>
+        <td>La seguridad afectiva y la respuesta sensible del cuidador son factores protectores del desarrollo socioemocional.</td>
+        <td>Juego guiado, identificación de emociones, respiración simple, rutinas de calma, refuerzo positivo.</td>
+        <td>Mayor tranquilidad, mejor contacto social y disminución de irritabilidad.</td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td>Estimulación cognitiva</td>
+        <td>La malnutrición puede afectar atención, memoria y lenguaje; por ello es útil introducir estimulación breve y repetida.</td>
+        <td>Ejercicios de atención, memoria de trabajo, lenguaje, secuencias, seguimiento de instrucciones.</td>
+        <td>Activación de procesos cognitivos básicos.</td>
+      </tr>
+      <tr>
+        <td>5</td>
+        <td>Habilidades sociales</td>
+        <td>Los niños con fatiga o irritabilidad pueden retraerse; la interacción estructurada favorece participación y confianza.</td>
+        <td>Turnos, cooperación, juegos por parejas, solución simple de conflictos, imitación de conductas prosociales.</td>
+        <td>Mejor interacción con pares y menor aislamiento.</td>
+      </tr>
+      <tr>
+        <td>6</td>
+        <td>Apoyo escolar</td>
+        <td>Cuando el niño tiene menor energía o atención, el aula requiere ajustes pedagógicos para evitar fracaso acumulativo.</td>
+        <td>Tareas graduadas, pausas breves, materiales visuales, instrucciones cortas, refuerzo del logro.</td>
+        <td>Mayor participación, permanencia en tarea y asistencia.</td>
+      </tr>
+      <tr>
+        <td>7</td>
+        <td>Fortalecimiento familiar</td>
+        <td>La recuperación depende también del hogar: alimentación, rutina, supervisión y respuesta emocional consistente.</td>
+        <td>Crianza sensible, supervisión de comidas, revisión de barreras de acceso, compromiso con controles de salud.</td>
+        <td>Mejor adherencia y continuidad del cuidado.</td>
+      </tr>
+      <tr>
+        <td>8</td>
+        <td>Reevaluación y cierre</td>
+        <td>La evaluación final permite estimar cambios y decidir continuidad, derivación o alta con vigilancia.</td>
+        <td>Reaplicación de observaciones, contraste con línea de base, plan de seguimiento.</td>
+        <td>Decisión clínica y educativa sustentada.</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<section id="rural" class="section">
+  <span class="badge">Contexto rural</span>
+  <h2>3. Adaptación del programa en contexto rural</h2>
+  <p>La intervención en zona rural requiere ajustes de accesibilidad, lengua, cultura y logística. La evidencia internacional señala que la malnutrición compromete supervivencia, crecimiento y desarrollo, por lo que la respuesta debe ser pertinente al territorio y sostenida en el tiempo.</p>
+  <div class="grid">
+    <div class="card">
+      <h3>Ajustes esenciales</h3>
+      <ul>
+        <li>Lenguaje simple y apoyo visual.</li>
+        <li>Sesiones cortas de 20 a 30 minutos.</li>
+        <li>Uso de alimentos locales en educación nutricional.</li>
+        <li>Participación de promotores, agentes de salud y líderes comunales.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Estrategia operativa</h3>
+      <ul>
+        <li>Aplicación en escuela, posta o local comunal.</li>
+        <li>Seguimiento domiciliario cuando sea necesario.</li>
+        <li>Prioridad en adherencia y vínculo.</li>
+        <li>Flexibilidad horaria según labores agrícolas y transporte.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="primernivel" class="section">
+  <span class="badge">Vigilancia en salud</span>
+  <h2>4. Formato para primer nivel de atención</h2>
+  <p><strong>Propósito:</strong> identificar señales tempranas de riesgo nutricional y conductual para derivación oportuna.</p>
+  <div class="grid">
+    <div class="card">
+      <h3>Ficha breve</h3>
+      <ul>
+        <li>Datos de identificación: nombre, edad, sexo, comunidad, fecha y evaluador.</li>
+        <li>Señales nutricionales: palidez, fatiga, bajo peso aparente, poco apetito, infecciones, estancamiento del crecimiento.</li>
+        <li>Señales conductuales: irritabilidad, aislamiento, llanto fácil, poco interés por jugar, respuesta lenta.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Acción clínica</h3>
+      <ul>
+        <li>Clasificación: leve, moderado o alto.</li>
+        <li>Orientación a la familia.</li>
+        <li>Derivación a nutrición, pediatría o psicología.</li>
+        <li>Seguimiento en 2 a 4 semanas.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="escolar" class="section">
+  <span class="badge">Detección escolar</span>
+  <h2>5. Programa escolar de detección temprana</h2>
+  <p>El aula funciona como un espacio estratégico de observación porque allí se hacen visibles cambios en energía, atención, interacción y rendimiento. UNICEF subraya la importancia de la detección temprana y el tratamiento oportuno de la malnutrición para proteger el desarrollo infantil.</p>
+  <div class="grid">
+    <div class="card">
+      <h3>Componentes</h3>
+      <ul>
+        <li>Tamizaje breve para docentes.</li>
+        <li>Observación semanal del comportamiento.</li>
+        <li>Semáforo de riesgo: verde, amarillo y rojo.</li>
+        <li>Derivación a salud cuando el riesgo es moderado o alto.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Criterios prácticos</h3>
+      <ul>
+        <li>Verde: sin señales persistentes.</li>
+        <li>Amarillo: una o dos señales.</li>
+        <li>Rojo: tres o más señales o deterioro funcional.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="piloto" class="section">
+  <span class="badge">Validación piloto</span>
+  <h2>6. Propuesta piloto con muestra pequeña</h2>
+  <p>La versión escolar debe validarse antes de su aplicación formal. Un piloto permite medir claridad, factibilidad, tiempo de aplicación y aceptación institucional.</p>
+  <ul>
+    <li>Aplicar en un grupo reducido de aulas.</li>
+    <li>Usar docentes voluntarios.</li>
+    <li>Revisar comprensión y carga de trabajo.</li>
+    <li>Verificar capacidad real de detección.</li>
+    <li>Evaluar si la derivación ocurre a tiempo.</li>
+  </ul>
+</section>
+
+<section id="prompt" class="section">
+  <span class="badge">Prompt reutilizable</span>
+  <h2>7. Prompt final</h2>
+  <pre>Actúa como un catedrático investigador en psicología social preventiva. Redacta un programa integral sobre las implicancias psicológicas y emocionales de la desnutrición y la anemia infantil. Incluye: 1) análisis de efectos cognitivos, emocionales, sociales y escolares; 2) programa de intervención de 8 semanas con fundamentación académica por semana; 3) adaptación para contexto rural; 4) ficha breve para el primer nivel de atención con señales de riesgo nutricional y conductual; 5) programa escolar de detección temprana con tamizaje en aula, semáforo de riesgo y derivación a salud; 6) propuesta piloto que requiera validación con muestra pequeña; 7) referencias en formato APA. El estilo debe ser académico, claro, aplicable y preventivo.</pre>
+</section>
+
+</div>
+</body>
+  </html>
