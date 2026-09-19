@@ -1,19 +1,36 @@
 "use strict";
 window.App={
-  KEY:"anemia_integrada_v1",
+  KEY:"anemia_integrada_v2",LEGACY_KEY:"anemia_integrada_v1",ACTIVE_ACTIVITY_KEY:"anemia_actividad_activa_v1",
   escape(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))},
-  datos(){try{return JSON.parse(localStorage.getItem(this.KEY)||"[]")}catch(e){return[]}},
-  guardar(tipo,payload){const a=this.datos();a.push({id:Date.now()+"-"+Math.random().toString(16).slice(2),tipo,creado:new Date().toISOString(),...payload});localStorage.setItem(this.KEY,JSON.stringify(a));return a[a.length-1]},
-  sincronizarCodigo(codigo){
-    if(!codigo)return;
-    ["codigoCasoObservacion","codigoCasoArticulacion","codigoEstudiante","codigoCasoSeguimiento"].forEach(id=>{const e=document.getElementById(id);if(e&&!e.value)e.value=codigo;});
+  datos(){try{let a=JSON.parse(localStorage.getItem(this.KEY)||"[]");if(!a.length){const l=JSON.parse(localStorage.getItem(this.LEGACY_KEY)||"[]");if(Array.isArray(l)&&l.length){a=l;localStorage.setItem(this.KEY,JSON.stringify(a));}}return Array.isArray(a)?a:[]}catch(e){return[]}},
+  actividadActiva(){return localStorage.getItem(this.ACTIVE_ACTIVITY_KEY)||""},
+  guardar(tipo,payload){const a=this.datos(),codigoActividad=payload.codigoActividad||this.actividadActiva()||"";a.push({id:Date.now()+"-"+Math.random().toString(16).slice(2),tipo,creado:new Date().toISOString(),codigoActividad,...payload});localStorage.setItem(this.KEY,JSON.stringify(a));return a[a.length-1]},
+  valor(id){const e=document.getElementById(id);return e?e.value.trim():""},
+  guardarActividad(){
+    let codigo=this.valor("codigoActividad");if(!codigo){codigo="ACT-"+new Date().toISOString().slice(0,10).replaceAll("-","")+"-"+Date.now().toString().slice(-5);document.getElementById("codigoActividad").value=codigo;}
+    const r={codigoActividad:codigo,institucionEducativa:this.valor("institucionEducativa"),establecimientoSalud:this.valor("establecimientoSalud"),departamento:this.valor("departamento"),provincia:this.valor("provincia"),distrito:this.valor("distrito"),fecha:this.valor("fechaActividad"),nivelEducativo:this.valor("nivelEducativo"),grado:this.valor("gradoActividad"),aulaSeccion:this.valor("aulaSeccion"),responsable:this.valor("responsableActividad"),profesion:this.valor("profesionResponsable"),publico:this.valor("publicoParticipante"),numeroParticipantes:this.valor("numeroParticipantes"),descripcion:this.valor("descripcionActividad")};
+    localStorage.setItem(this.ACTIVE_ACTIVITY_KEY,codigo);this.guardar("actividad",r);this.mostrarActividad(r);return r;
   },
-  exportar(){const b=new Blob([JSON.stringify(this.datos(),null,2)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(b);a.download="anemia-registros.json";a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}
+  mostrarActividad(r){const e=document.getElementById("estadoActividad");if(!e)return;if(!r){e.textContent="Sin actividad activa.";return;}e.innerHTML="<strong>Actividad activa: "+this.escape(r.codigoActividad)+"</strong><br>"+this.escape(r.institucionEducativa||"Institución no consignada")+" · "+this.escape(r.establecimientoSalud||"Establecimiento no consignado")+" · "+this.escape(r.fecha||"Fecha no consignada");},
+  cargarActividadActiva(){const c=this.actividadActiva();if(!c)return this.mostrarActividad(null);const r=this.datos().filter(x=>x.tipo==="actividad"&&x.codigoActividad===c).slice(-1)[0];if(r){const m={codigoActividad:"codigoActividad",institucionEducativa:"institucionEducativa",establecimientoSalud:"establecimientoSalud",departamento:"departamento",provincia:"provincia",distrito:"distrito",fecha:"fechaActividad",nivelEducativo:"nivelEducativo",grado:"gradoActividad",aulaSeccion:"aulaSeccion",responsable:"responsableActividad",profesion:"profesionResponsable",publico:"publicoParticipante",numeroParticipantes:"numeroParticipantes",descripcion:"descripcionActividad"};Object.entries(m).forEach(([k,id])=>{const e=document.getElementById(id);if(e)e.value=r[k]??""});this.mostrarActividad(r)}},
+  sincronizarCodigo(codigo){if(!codigo)return;["codigoCasoObservacion","codigoCasoArticulacion","codigoEstudiante","codigoCasoSeguimiento"].forEach(id=>{const e=document.getElementById(id);if(e&&!e.value)e.value=codigo})},
+  descargar(blob,nombre){const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=nombre;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),1500)},
+  csv(rows){if(!rows.length)return "";const keys=[...new Set(rows.flatMap(x=>Object.keys(x)))],q=v=>'"'+String(v??"").replaceAll('"','""')+'"';return [keys.map(q).join(","),...rows.map(r=>keys.map(k=>q(typeof r[k]==="object"?JSON.stringify(r[k]):r[k])).join(","))].join("\r\n")},
+  filasPorTipo(tipo){return this.datos().filter(x=>x.tipo===tipo)},
+  resumenTexto(){const a=this.datos(),n=t=>a.filter(x=>x.tipo===t).length;return ["SIP - Detección temprana de anemia | Resumen de respaldo","Generado: "+new Date().toLocaleString(),"Actividades registradas: "+n("actividad"),"Observaciones preventivas: "+n("observacion_preventiva"),"Registros familia/salud: "+n("articulacion_familia_salud"),"Evaluaciones sanitarias: "+n("evaluacion_salud"),"Seguimientos escolares: "+n("seguimiento_escolar"),"","Uso: insumo para continuidad, reportes o informe SERUMS.","Investigación: el uso científico posterior requiere protocolo, protección de datos, autorizaciones y salvaguardas éticas aplicables.","La observación docente es preventiva y no constituye diagnóstico de anemia."].join("\n")},
+  async exportarZIP(){
+    if(typeof JSZip==="undefined"||typeof XLSX==="undefined"){alert("No se pudieron cargar los componentes de exportación. Verifique la conexión e inténtelo nuevamente.");return}
+    const datos=this.datos();if(!datos.length){alert("No hay registros locales para exportar.");return}
+    const zip=new JSZip(),meta={aplicacion:"SIP - Detección temprana de anemia",version:"integrada-v2",exportado:new Date().toISOString(),actividadActiva:this.actividadActiva(),totalRegistros:datos.length};
+    zip.file("respaldo/anemia-registros.json",JSON.stringify({metadata:meta,registros:datos},null,2));zip.file("respaldo/metadata.json",JSON.stringify(meta,null,2));zip.file("informe/resumen-serums.txt",this.resumenTexto());
+    ["actividad","observacion_preventiva","articulacion_familia_salud","evaluacion_salud","seguimiento_escolar"].forEach(t=>zip.file("csv/"+t+".csv","\ufeff"+this.csv(this.filasPorTipo(t))));
+    const wb=XLSX.utils.book_new(),hojas=[["Actividad","actividad"],["Observacion","observacion_preventiva"],["Familia-Salud","articulacion_familia_salud"],["Evaluacion-Salud","evaluacion_salud"],["Seguimiento","seguimiento_escolar"]];
+    hojas.forEach(([nombre,t])=>{const rows=this.filasPorTipo(t).map(r=>{const o={};Object.entries(r).forEach(([k,v])=>o[k]=typeof v==="object"?JSON.stringify(v):v);return o});XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(rows.length?rows:[{sin_registros:""}]),nombre)});
+    XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet([{indicador:"Actividades",valor:this.filasPorTipo("actividad").length},{indicador:"Observaciones preventivas",valor:this.filasPorTipo("observacion_preventiva").length},{indicador:"Articulación familia-salud",valor:this.filasPorTipo("articulacion_familia_salud").length},{indicador:"Evaluaciones de salud",valor:this.filasPorTipo("evaluacion_salud").length},{indicador:"Seguimientos",valor:this.filasPorTipo("seguimiento_escolar").length}]),"Resumen");
+    zip.file("excel/anemia-serums.xlsx",XLSX.write(wb,{bookType:"xlsx",type:"array"}));
+    zip.file("LEEME.txt","Excel: revisión, filtros y trabajo cotidiano.\nCSV: intercambio y análisis.\nJSON: respaldo/restauración e interoperabilidad futura con R, Python, Power BI u otros sistemas. No necesita editar JSON.\n\nEl uso de registros con fines de investigación requiere los requisitos éticos, de confidencialidad y autorización que correspondan.");
+    this.descargar(await zip.generateAsync({type:"blob",compression:"DEFLATE",compressionOptions:{level:6}}),"SIP-anemia-respaldo-"+new Date().toISOString().slice(0,10)+".zip")
+  },
+  async importarRespaldo(file){if(!file)return;try{let obj;if(file.name.toLowerCase().endsWith(".zip")){if(typeof JSZip==="undefined")throw new Error("No se pudo cargar el componente ZIP.");const zip=await JSZip.loadAsync(file),f=zip.file("respaldo/anemia-registros.json");if(!f)throw new Error("El ZIP no contiene respaldo/anemia-registros.json.");obj=JSON.parse(await f.async("string"))}else obj=JSON.parse(await file.text());const regs=Array.isArray(obj)?obj:obj.registros;if(!Array.isArray(regs))throw new Error("Formato de respaldo no reconocido.");localStorage.setItem(this.KEY,JSON.stringify(regs));const act=(obj.metadata&&obj.metadata.actividadActiva)||regs.filter(x=>x.tipo==="actividad").slice(-1)[0]?.codigoActividad||"";if(act)localStorage.setItem(this.ACTIVE_ACTIVITY_KEY,act);this.cargarActividadActiva();window.SeguimientoEscolar&&SeguimientoEscolar.mostrar();window.SeguimientoEscolar&&SeguimientoEscolar.mostrarArticulacion();alert("Respaldo restaurado correctamente: "+regs.length+" registros.")}catch(e){alert("No se pudo importar el respaldo: "+e.message)}}
 };
-document.addEventListener("DOMContentLoaded",()=>{
-  window.SeguimientoEscolar.mostrar();
-  window.SeguimientoEscolar.mostrarArticulacion();
-  ["codigoCasoObservacion","codigoCasoArticulacion","codigoEstudiante","codigoCasoSeguimiento"].forEach(id=>{
-    const e=document.getElementById(id);if(e)e.addEventListener("change",()=>App.sincronizarCodigo(e.value.trim()));
-  });
-});
+document.addEventListener("DOMContentLoaded",()=>{App.cargarActividadActiva();window.SeguimientoEscolar&&SeguimientoEscolar.mostrar();window.SeguimientoEscolar&&SeguimientoEscolar.mostrarArticulacion();["codigoCasoObservacion","codigoCasoArticulacion","codigoEstudiante","codigoCasoSeguimiento"].forEach(id=>{const e=document.getElementById(id);if(e)e.addEventListener("change",()=>App.sincronizarCodigo(e.value.trim()))})});
