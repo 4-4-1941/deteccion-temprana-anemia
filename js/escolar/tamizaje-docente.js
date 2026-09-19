@@ -1,74 +1,38 @@
 "use strict";
-
-window.TamizajeDocente = {
-  leer() {
-    const marcados = [...document.querySelectorAll("[data-alerta-escolar]:checked")];
-
-    return {
-      indicadores: marcados.map((x) => ({
-        codigo: x.value,
-        dominio: x.dataset.dominio || ""
-      })),
-      persistente: document.getElementById("persistencia").value === "si",
-      cambioHabitual: document.getElementById("cambioHabitual").value === "si",
-      interferencia: document.getElementById("interferencia").value
+window.TamizajeDocente={
+  codigo(){
+    const a=document.getElementById("codigoCasoObservacion");
+    return a?a.value.trim():"";
+  },
+  leer(){
+    const marcados=[...document.querySelectorAll("[data-alerta-escolar]:checked")];
+    return{
+      codigo:this.codigo(),
+      indicadores:marcados.map(x=>({codigo:x.value,dominio:x.dataset.dominio||""})),
+      persistente:document.getElementById("persistencia").value==="si",
+      cambioHabitual:document.getElementById("cambioHabitual").value==="si",
+      interferencia:document.getElementById("interferencia").value
     };
   },
-
-  evaluar() {
-    return this.leer();
+  evaluar(){return this.leer();},
+  resumen(r){
+    const n={fatiga:"fatiga o cansancio frecuente",actividad:"menor actividad o participación",somnolencia:"somnolencia o menor nivel de alerta",atencion:"dificultad de atención o concentración",rendimiento:"cambio del rendimiento respecto a su nivel habitual",ausencias:"cambios en asistencia o continuidad escolar",irritabilidad:"irritabilidad o cambio socioemocional persistente",retraimiento:"apatía, retraimiento o menor interacción",palidez:"palidez observable"};
+    const s=r.indicadores.map(x=>n[x.codigo]||x.codigo),p=[];
+    if(r.codigo)p.push("Caso: "+r.codigo+".");
+    if(s.length)p.push("Observaciones: "+s.join(", ")+".");
+    p.push("Persistencia: "+(r.persistente?"sí":"no")+".");
+    p.push("Cambio respecto al funcionamiento habitual: "+(r.cambioHabitual?"sí":"no")+".");
+    p.push("Interferencia: "+r.interferencia+".");
+    p.push("Este registro es descriptivo y no diagnostica anemia.");
+    return p.join(" ");
   },
-
-  resumen(registro) {
-    const nombres = {
-      fatiga: "fatiga o cansancio frecuente",
-      actividad: "menor actividad o participación",
-      somnolencia: "somnolencia o menor nivel de alerta",
-      atencion: "dificultad de atención o concentración",
-      rendimiento: "cambio del rendimiento respecto a su nivel habitual",
-      ausencias: "cambios en asistencia o continuidad escolar",
-      irritabilidad: "irritabilidad o cambio socioemocional persistente",
-      retraimiento: "apatía, retraimiento o menor interacción",
-      palidez: "palidez observable"
-    };
-
-    const seleccionadas = registro.indicadores.map((x) => nombres[x.codigo] || x.codigo);
-
-    if (!seleccionadas.length &&
-        !registro.persistente &&
-        !registro.cambioHabitual &&
-        registro.interferencia === "ninguna") {
-      return "No se registraron cambios en esta observación. Mantener observación habitual.";
-    }
-
-    const partes = [];
-
-    if (seleccionadas.length) {
-      partes.push("Observaciones: " + seleccionadas.join(", ") + ".");
-    }
-
-    partes.push("Persistencia: " + (registro.persistente ? "sí" : "no") + ".");
-    partes.push("Cambio respecto al funcionamiento habitual: " + (registro.cambioHabitual ? "sí" : "no") + ".");
-    partes.push("Interferencia: " + registro.interferencia + ".");
-    partes.push("Estas observaciones no diagnostican anemia. Deben interpretarse en su contexto y comunicarse a la familia o al equipo de salud cuando generen preocupación o requieran evaluación.");
-
-    return partes.join(" ");
-  },
-
-  render(registro) {
-    const r = document.getElementById("resultadoEscolar");
-    r.className = "result";
-    r.textContent = this.resumen(registro);
-  },
-
-  registrar() {
-    const registro = this.leer();
-    this.render(registro);
-
-    if (window.App && typeof window.App.guardar === "function") {
-      window.App.guardar("observacion_preventiva", registro);
-    }
-
-    return registro;
+  render(r){const e=document.getElementById("resultadoEscolar");e.className="result";e.textContent=this.resumen(r);},
+  registrar(){
+    const r=this.leer();
+    if(!r.codigo){document.getElementById("resultadoEscolar").textContent="Ingrese un código del estudiante/caso para mantener la trazabilidad longitudinal.";return null;}
+    this.render(r);
+    if(window.App)window.App.guardar("observacion_preventiva",r);
+    window.App&&window.App.sincronizarCodigo&&window.App.sincronizarCodigo(r.codigo);
+    return r;
   }
 };
