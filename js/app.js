@@ -4,6 +4,16 @@ window.App={
   escape(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))},
   datos(){try{return JSON.parse(localStorage.getItem(this.KEY)||"[]")}catch(e){return[]}},
   guardar(tipo,payload){const a=this.datos();a.push({id:Date.now()+"-"+Math.random().toString(16).slice(2),tipo,creado:new Date().toISOString(),...payload});localStorage.setItem(this.KEY,JSON.stringify(a));return a[a.length-1]},
+  sincronizarCodigo(codigo){
+    if(!codigo)return;
+    ["codigoCasoObservacion","codigoCasoArticulacion","codigoEstudiante","codigoCasoSeguimiento"].forEach(id=>{const e=document.getElementById(id);if(e&&!e.value)e.value=codigo;});
+  },
   exportar(){const b=new Blob([JSON.stringify(this.datos(),null,2)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(b);a.download="anemia-registros.json";a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}
 };
-document.addEventListener("DOMContentLoaded",()=>window.SeguimientoEscolar.mostrar());
+document.addEventListener("DOMContentLoaded",()=>{
+  window.SeguimientoEscolar.mostrar();
+  window.SeguimientoEscolar.mostrarArticulacion();
+  ["codigoCasoObservacion","codigoCasoArticulacion","codigoEstudiante","codigoCasoSeguimiento"].forEach(id=>{
+    const e=document.getElementById(id);if(e)e.addEventListener("change",()=>App.sincronizarCodigo(e.value.trim()));
+  });
+});
