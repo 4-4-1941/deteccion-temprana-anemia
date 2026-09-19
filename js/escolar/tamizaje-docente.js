@@ -1,28 +1,74 @@
 "use strict";
-window.TamizajeDocente={
-  evaluar(){
-    const marcados=[...document.querySelectorAll("[data-alerta-escolar]:checked")];
-    const dominios=new Set(marcados.map(x=>x.dataset.dominio));
-    const persistente=document.getElementById("persistencia").value==="si";
-    const cambio=document.getElementById("cambioHabitual").value==="si";
-    const interferencia=document.getElementById("interferencia").value;
-    let nivel="Verde",clase="verde";
-    if(interferencia==="marcada"||(marcados.length>=4&&dominios.size>=2&&persistente&&cambio)){
-      nivel="Rojo";clase="rojo";
-    }else if(marcados.length>0||persistente||cambio||interferencia==="leve"){
-      nivel="Amarillo";clase="amarillo";
-    }
-    return{
-      nivel,clase,total:marcados.length,dominios:dominios.size,persistente,cambio,interferencia,
-      indicadores:marcados.map(x=>x.value),
-      mensaje:nivel==="Rojo"?"Alerta funcional alta: comunicar a la familia y orientar a evaluación en el establecimiento de salud. No equivale a diagnóstico de anemia.":nivel==="Amarillo"?"Alerta funcional: observar evolución, revisar contexto y considerar coordinación con familia/salud si persiste.":"Sin alerta funcional persistente identificada en este registro.",
-      validacion:"ALGORITMO_PILOTO_NO_VALIDADO"
+
+window.TamizajeDocente = {
+  leer() {
+    const marcados = [...document.querySelectorAll("[data-alerta-escolar]:checked")];
+
+    return {
+      indicadores: marcados.map((x) => ({
+        codigo: x.value,
+        dominio: x.dataset.dominio || ""
+      })),
+      persistente: document.getElementById("persistencia").value === "si",
+      cambioHabitual: document.getElementById("cambioHabitual").value === "si",
+      interferencia: document.getElementById("interferencia").value
     };
   },
-  render(){
-    const e=this.evaluar(),r=document.getElementById("resultadoEscolar");
-    r.className="result "+e.clase;
-    r.innerHTML="<strong>"+e.nivel+"</strong><br>"+e.mensaje+"<br><span class='small'>Indicadores: "+e.total+" · dominios: "+e.dominios+" · algoritmo piloto no validado.</span>";
-    return e;
+
+  evaluar() {
+    return this.leer();
+  },
+
+  resumen(registro) {
+    const nombres = {
+      fatiga: "fatiga o cansancio frecuente",
+      actividad: "menor actividad o participación",
+      somnolencia: "somnolencia o menor nivel de alerta",
+      atencion: "dificultad de atención o concentración",
+      rendimiento: "cambio del rendimiento respecto a su nivel habitual",
+      ausencias: "cambios en asistencia o continuidad escolar",
+      irritabilidad: "irritabilidad o cambio socioemocional persistente",
+      retraimiento: "apatía, retraimiento o menor interacción",
+      palidez: "palidez observable"
+    };
+
+    const seleccionadas = registro.indicadores.map((x) => nombres[x.codigo] || x.codigo);
+
+    if (!seleccionadas.length &&
+        !registro.persistente &&
+        !registro.cambioHabitual &&
+        registro.interferencia === "ninguna") {
+      return "No se registraron cambios en esta observación. Mantener observación habitual.";
+    }
+
+    const partes = [];
+
+    if (seleccionadas.length) {
+      partes.push("Observaciones: " + seleccionadas.join(", ") + ".");
+    }
+
+    partes.push("Persistencia: " + (registro.persistente ? "sí" : "no") + ".");
+    partes.push("Cambio respecto al funcionamiento habitual: " + (registro.cambioHabitual ? "sí" : "no") + ".");
+    partes.push("Interferencia: " + registro.interferencia + ".");
+    partes.push("Estas observaciones no diagnostican anemia. Deben interpretarse en su contexto y comunicarse a la familia o al equipo de salud cuando generen preocupación o requieran evaluación.");
+
+    return partes.join(" ");
+  },
+
+  render(registro) {
+    const r = document.getElementById("resultadoEscolar");
+    r.className = "result";
+    r.textContent = this.resumen(registro);
+  },
+
+  registrar() {
+    const registro = this.leer();
+    this.render(registro);
+
+    if (window.App && typeof window.App.guardar === "function") {
+      window.App.guardar("observacion_preventiva", registro);
+    }
+
+    return registro;
   }
 };
