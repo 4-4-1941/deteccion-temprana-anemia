@@ -1,44 +1,183 @@
 <!doctype html>
 <html lang="es">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Detección temprana de anemia · Escuela y salud</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Detección temprana de anemia · Prevención y seguimiento</title>
 <link rel="stylesheet" href="css/styles.css">
 </head>
-<body><main class="container">
-<header class="hero"><h1>Detección temprana de anemia</h1><p>Herramienta preventiva escuela–familia–establecimiento de salud. La alerta docente identifica cambios funcionales; el diagnóstico sanitario requiere evaluación y hemoglobina.</p></header>
-<nav class="nav"><a href="#docente">Alerta docente</a><a href="#salud">Tamizaje CCSS</a><a href="#seguimiento">Seguimiento</a><a href="#fundamento">Fundamento</a></nav>
+<body>
+<main class="container">
 
-<section id="docente" class="section"><span class="badge">Escuela · prevención</span><h2>Semáforo de alerta funcional escolar</h2>
-<p class="small">No diagnostica anemia. Registra observaciones persistentes y cambios respecto al funcionamiento habitual.</p>
-<div class="grid"><div>
-<label class="check"><input type="checkbox" data-alerta-escolar data-dominio="energia" value="fatiga">Fatiga o cansancio frecuente</label>
-<label class="check"><input type="checkbox" data-alerta-escolar data-dominio="energia" value="actividad">Menor actividad o participación</label>
-<label class="check"><input type="checkbox" data-alerta-escolar data-dominio="alerta" value="somnolencia">Somnolencia o se duerme en actividades</label>
-<label class="check"><input type="checkbox" data-alerta-escolar data-dominio="aprendizaje" value="atencion">Dificultad de atención/concentración</label>
-<label class="check"><input type="checkbox" data-alerta-escolar data-dominio="aprendizaje" value="rendimiento">Descenso de rendimiento respecto a sí mismo</label>
-<label class="check"><input type="checkbox" data-alerta-escolar data-dominio="asistencia" value="ausencias">Aumento de faltas o interrupciones de asistencia</label>
-</div><div>
-<label class="check"><input type="checkbox" data-alerta-escolar data-dominio="emocional" value="irritabilidad">Irritabilidad persistente</label>
-<label class="check"><input type="checkbox" data-alerta-escolar data-dominio="social" value="retraimiento">Apatía, retraimiento o menor interacción</label>
-<label class="check"><input type="checkbox" data-alerta-escolar data-dominio="fisico" value="palidez">Palidez aparente</label>
-<label>Persistencia<select id="persistencia"><option value="no">No / ocasional</option><option value="si">Sí / repetida</option></select></label>
-<label>Cambio respecto a funcionamiento habitual<select id="cambioHabitual"><option value="no">No</option><option value="si">Sí</option></select></label>
-<label>Interferencia escolar<select id="interferencia"><option value="ninguna">Ninguna</option><option value="leve">Leve</option><option value="marcada">Marcada</option></select></label>
-</div></div>
-<div class="actions"><button class="btn" onclick="TamizajeDocente.render()">Calcular alerta</button></div><div id="resultadoEscolar" class="result">Sin evaluación.</div></section>
+<header class="hero">
+  <h1>Detección temprana de anemia</h1>
+  <p>Herramienta preventiva para articular escuela, familia, comunidad y establecimiento de salud.</p>
+  <p><strong>Importante:</strong> la observación escolar o comunitaria no diagnostica anemia ni sustituye la evaluación profesional. Su finalidad es registrar cambios, facilitar la comunicación y favorecer una evaluación sanitaria oportuna cuando corresponda.</p>
+</header>
 
-<section id="salud" class="section"><span class="badge">CCSS · evaluación sanitaria</span><h2>Hemoglobina, edad y altitud</h2>
-<div class="grid"><div><label>Código del estudiante/caso<input id="codigoEstudiante" autocomplete="off"></label><label>Fecha de nacimiento<input id="fechaNacimiento" type="date"></label><label>Fecha de evaluación<input id="fechaEvaluacion" type="date"></label><label>Grado / referencia escolar<input id="grado"></label></div>
-<div><label>Hemoglobina observada (g/dL)<input id="hbObservada" type="number" min="1" max="25" step="0.1"></label><label>Altitud (msnm)<input id="altitud" type="number" min="0" max="6000" step="1" value="0"></label></div></div>
-<div class="actions"><button class="btn" onclick="ClasificacionAnemia.evaluar();SeguimientoSalud.mostrar()">Evaluar</button></div><div id="resultadoSalud" class="result">Sin evaluación.</div><p id="orientacionControl" class="small"></p></section>
+<nav class="nav" aria-label="Navegación principal">
+  <a href="#capacitacion">Capacitación</a>
+  <a href="#observacion">Observación</a>
+  <a href="#articulacion">Familia y derivación</a>
+  <a href="#salud">Evaluación de salud</a>
+  <a href="#seguimiento">Seguimiento</a>
+  <a href="#serums">SERUMS</a>
+  <a href="#evidencia">Evidencia</a>
+  <a href="#fundamento">Fundamento</a>
+</nav>
 
-<section id="seguimiento" class="section"><span class="badge">Escuela · seguimiento</span><h2>Seguimiento funcional</h2>
-<div class="grid"><div><label>Fecha<input id="fechaSeguimiento" type="date"></label><label>Asistencia<select id="segAsistencia"><option>Sin cambio</option><option>Mejoró</option><option>Empeoró</option></select></label></div><div><label>Rendimiento<select id="segRendimiento"><option>Sin cambio</option><option>Mejoró</option><option>Empeoró</option></select></label><label>Alerta/energía<select id="segAlerta"><option>Sin cambio</option><option>Mejoró</option><option>Empeoró</option></select></label></div></div>
-<label>Observaciones<textarea id="segObservaciones"></textarea></label><div class="actions"><button class="btn" onclick="SeguimientoEscolar.registrar()">Guardar seguimiento</button><button class="btn secondary" onclick="App.exportar()">Exportar JSON</button></div><div id="historialEscolar"></div></section>
+<section id="capacitacion" class="section">
+  <span class="badge">Promoción y prevención</span>
+  <h2>Capacitación</h2>
+  <div class="grid">
+    <div class="card">
+      <h3>Docentes, familias y comunidad</h3>
+      <p>Reconocer cambios observables, registrarlos de forma descriptiva, comunicarlos y orientar hacia evaluación sanitaria cuando corresponda. No diagnosticar ni indicar tratamiento.</p>
+    </div>
+    <div class="card">
+      <h3>Profesionales de salud y SERUMS</h3>
+      <p>Organizar promoción, capacitación, articulación territorial, evaluación sanitaria, seguimiento y medición de resultados respetando las competencias de cada profesión.</p>
+    </div>
+  </div>
+</section>
 
-<section id="fundamento" class="section"><h2>Fundamento y alcance</h2><p>El docente observa cambios en energía, alerta, atención, rendimiento, participación, asistencia y conducta; ante una alerta comunica a la familia y orienta hacia evaluación sanitaria. El establecimiento de salud realiza la evaluación correspondiente y la medición de hemoglobina. La aplicación mantiene separada la alerta escolar de la clasificación hematológica.</p><p class="small">Base normativa incorporada al motor: NTS N.° 213-MINSA/DGIESP-2024 y RM N.° 429-2024/MINSA. El algoritmo del semáforo escolar está en fase de validación y no constituye una escala diagnóstica.</p></section>
+<section id="observacion" class="section">
+  <span class="badge">Escuela y comunidad · prevención</span>
+  <h2>Registro preventivo de observaciones</h2>
+  <p class="small">Registre características observables y cambios respecto al funcionamiento habitual. No se asignan puntajes, ponderaciones, probabilidades ni colores de riesgo.</p>
+
+  <div class="grid">
+    <div>
+      <label class="check"><input type="checkbox" data-alerta-escolar data-dominio="energia" value="fatiga">Fatiga o cansancio frecuente</label>
+      <label class="check"><input type="checkbox" data-alerta-escolar data-dominio="energia" value="actividad">Menor actividad o participación</label>
+      <label class="check"><input type="checkbox" data-alerta-escolar data-dominio="alerta" value="somnolencia">Somnolencia o menor nivel de alerta</label>
+      <label class="check"><input type="checkbox" data-alerta-escolar data-dominio="aprendizaje" value="atencion">Dificultad de atención o concentración</label>
+      <label class="check"><input type="checkbox" data-alerta-escolar data-dominio="aprendizaje" value="rendimiento">Cambio del rendimiento respecto a su nivel habitual</label>
+      <label class="check"><input type="checkbox" data-alerta-escolar data-dominio="asistencia" value="ausencias">Cambios en asistencia o continuidad escolar</label>
+    </div>
+    <div>
+      <label class="check"><input type="checkbox" data-alerta-escolar data-dominio="emocional" value="irritabilidad">Irritabilidad o cambio socioemocional persistente</label>
+      <label class="check"><input type="checkbox" data-alerta-escolar data-dominio="social" value="retraimiento">Apatía, retraimiento o menor interacción</label>
+      <label class="check"><input type="checkbox" data-alerta-escolar data-dominio="fisico" value="palidez">Palidez observable</label>
+
+      <label>Persistencia
+        <select id="persistencia">
+          <option value="no">No / ocasional</option>
+          <option value="si">Sí / repetida</option>
+        </select>
+      </label>
+
+      <label>Cambio respecto al funcionamiento habitual
+        <select id="cambioHabitual">
+          <option value="no">No</option>
+          <option value="si">Sí</option>
+        </select>
+      </label>
+
+      <label>Interferencia en actividades habituales
+        <select id="interferencia">
+          <option value="ninguna">Ninguna</option>
+          <option value="leve">Leve</option>
+          <option value="marcada">Marcada</option>
+        </select>
+      </label>
+    </div>
+  </div>
+
+  <div class="actions">
+    <button class="btn" onclick="TamizajeDocente.registrar()">Registrar observaciones</button>
+  </div>
+  <div id="resultadoEscolar" class="result">Sin registro de observaciones.</div>
+</section>
+
+<section id="articulacion" class="section">
+  <span class="badge">Escuela · familia · salud</span>
+  <h2>Comunicación y derivación</h2>
+  <p>Los cambios observados deben interpretarse en su contexto. Cuando sean persistentes, interfieran con el funcionamiento habitual o generen preocupación, corresponde comunicarlos a la familia y facilitar el acceso a evaluación profesional.</p>
+  <p class="small">La inasistencia, el rendimiento y otros indicadores educativos son variables de seguimiento y contexto; no constituyen síntomas específicos de anemia.</p>
+</section>
+
+<section id="salud" class="section">
+  <span class="badge">Establecimiento de salud · evaluación profesional</span>
+  <h2>Registro de evaluación sanitaria</h2>
+  <p class="small">La evaluación sanitaria corresponde al personal competente. La hemoglobina debe interpretarse según edad, condición de la persona, altitud cuando corresponda y normativa vigente. La hemoglobina por sí sola no establece etiología ferropénica.</p>
+
+  <div class="grid">
+    <div>
+      <label>Código del estudiante/caso<input id="codigoEstudiante" autocomplete="off"></label>
+      <label>Fecha de nacimiento<input id="fechaNacimiento" type="date"></label>
+      <label>Fecha de evaluación<input id="fechaEvaluacion" type="date"></label>
+      <label>Grado / referencia escolar<input id="grado"></label>
+    </div>
+    <div>
+      <label>Hemoglobina observada (g/dL)<input id="hbObservada" type="number" min="1" max="25" step="0.1"></label>
+      <label>Altitud (m s. n. m.)<input id="altitud" type="number" min="0" max="5500" step="1" value="0"></label>
+    </div>
+  </div>
+
+  <div class="actions">
+    <button class="btn" onclick="ClasificacionAnemia.evaluar();SeguimientoSalud.mostrar()">Registrar evaluación</button>
+  </div>
+  <div id="resultadoSalud" class="result">Sin evaluación registrada.</div>
+  <p id="orientacionControl" class="small"></p>
+</section>
+
+<section id="seguimiento" class="section">
+  <span class="badge">Continuidad</span>
+  <h2>Seguimiento funcional</h2>
+  <div class="grid">
+    <div>
+      <label>Fecha<input id="fechaSeguimiento" type="date"></label>
+      <label>Asistencia
+        <select id="segAsistencia">
+          <option>Sin cambio</option><option>Mejoró</option><option>Empeoró</option>
+        </select>
+      </label>
+    </div>
+    <div>
+      <label>Rendimiento
+        <select id="segRendimiento">
+          <option>Sin cambio</option><option>Mejoró</option><option>Empeoró</option>
+        </select>
+      </label>
+      <label>Alerta / energía
+        <select id="segAlerta">
+          <option>Sin cambio</option><option>Mejoró</option><option>Empeoró</option>
+        </select>
+      </label>
+    </div>
+  </div>
+
+  <label>Observaciones<textarea id="segObservaciones"></textarea></label>
+  <div class="actions">
+    <button class="btn" onclick="SeguimientoEscolar.registrar()">Guardar seguimiento</button>
+    <button class="btn secondary" onclick="App.exportar()">Exportar JSON</button>
+  </div>
+  <div id="historialEscolar"></div>
+</section>
+
+<section id="serums" class="section">
+  <span class="badge">Aplicación territorial</span>
+  <h2>Enfoque SERUMS multiprofesional</h2>
+  <p>El programa puede utilizarse en promoción de la salud, campañas, intervención comunitaria y escolar, articulación con establecimientos y seguimiento territorial. Puede involucrar medicina, enfermería, nutrición, psicología, obstetricia y otras profesiones de salud según sus competencias.</p>
+</section>
+
+<section id="evidencia" class="section">
+  <span class="badge">ⓘ Evidencia e investigación</span>
+  <h2>Evidencia e investigación</h2>
+  <p>La evidencia científica debe vincularse a cada componente del programa e incluir resultados favorables, no confirmatorios, heterogéneos y sus limitaciones.</p>
+  <p class="small">El registro rutinario del programa no constituye automáticamente investigación. El uso científico de los datos requiere protocolo, metodología, confidencialidad, evaluación ética y autorizaciones correspondientes.</p>
+</section>
+
+<section id="fundamento" class="section">
+  <h2>Fundamento y alcance</h2>
+  <p><strong>Observación preventiva ≠ diagnóstico clínico ≠ investigación científica.</strong></p>
+  <p>Flujo del programa: capacitar → observar → registrar características → comunicar con la familia → derivar cuando corresponda → evaluación profesional → hemoglobina y criterios MINSA → conducta → seguimiento → evaluación del programa.</p>
+  <p class="small">Base normativa incorporada al repositorio: NTS N.° 213-MINSA/DGIESP-2024, aprobada por RM N.° 251-2024/MINSA y modificada por RM N.° 429-2024/MINSA.</p>
+</section>
+
 </main>
+
 <script src="js/data/normativa.js"></script>
 <script src="js/core/paciente.js"></script>
 <script src="js/escolar/tamizaje-docente.js"></script>
@@ -48,4 +187,5 @@
 <script src="js/salud/clasificacion-anemia.js"></script>
 <script src="js/salud/seguimiento-salud.js"></script>
 <script src="js/app.js"></script>
-</body></html>
+</body>
+</html>
