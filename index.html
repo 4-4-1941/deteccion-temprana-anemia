@@ -16,8 +16,34 @@
 </header>
 
 <nav class="nav" aria-label="Navegación principal">
-<a href="#capacitacion">Capacitación</a><a href="#observacion">Observación</a><a href="#articulacion">Familia y derivación</a><a href="#salud">Evaluación de salud</a><a href="#seguimiento">Seguimiento</a><a href="#serums">SERUMS</a><a href="#evidencia">Evidencia</a><a href="#fundamento">Fundamento</a>
+<a href="#actividad">Actividad</a><a href="#capacitacion">Capacitación</a><a href="#observacion">Observación</a><a href="#articulacion">Familia y derivación</a><a href="#salud">Evaluación de salud</a><a href="#seguimiento">Seguimiento</a><a href="#serums">SERUMS</a><a href="#evidencia">Evidencia</a><a href="#fundamento">Fundamento</a>
 </nav>
+
+
+<section id="actividad" class="section">
+<span class="badge">Identificación de la intervención</span><h2>Actividad de capacitación, promoción o campaña</h2>
+<p class="small">Registre los datos básicos de la actividad. Se guardan localmente y permiten vincular capacitación, observación, familia, evaluación de salud y seguimiento bajo un mismo código de actividad.</p>
+<div class="grid"><div>
+<label>Código de actividad<input id="codigoActividad" autocomplete="off" placeholder="Ej. IE001-2026-01"></label>
+<label>Institución educativa<input id="institucionEducativa" autocomplete="off"></label>
+<label>Establecimiento de salud<input id="establecimientoSalud" autocomplete="off"></label>
+<label>Departamento / región<input id="departamento" autocomplete="off"></label>
+<label>Provincia<input id="provincia" autocomplete="off"></label>
+<label>Distrito / localidad<input id="distrito" autocomplete="off"></label>
+<label>Fecha de actividad<input id="fechaActividad" type="date"></label>
+</div><div>
+<label>Nivel educativo<select id="nivelEducativo"><option value="">Seleccione</option><option>Primaria</option><option>Secundaria</option><option>Otro / no aplica</option></select></label>
+<label>Grado académico<select id="gradoActividad"><option value="">Seleccione</option><optgroup label="Primaria"><option>1.º de primaria</option><option>2.º de primaria</option><option>3.º de primaria</option><option>4.º de primaria</option><option>5.º de primaria</option><option>6.º de primaria</option></optgroup><optgroup label="Secundaria"><option>1.º de secundaria</option><option>2.º de secundaria</option><option>3.º de secundaria</option><option>4.º de secundaria</option><option>5.º de secundaria</option></optgroup><option>Otro / no aplica</option></select></label>
+<label>Aula / sección<input id="aulaSeccion" autocomplete="off"></label>
+<label>Responsable de la actividad<input id="responsableActividad" autocomplete="off" placeholder="Nombre o código institucional, según corresponda"></label>
+<label>Profesión / rol<select id="profesionResponsable"><option value="">Seleccione</option><option>Psicología</option><option>Nutrición</option><option>Enfermería</option><option>Medicina</option><option>Obstetricia</option><option>Odontología</option><option>Farmacia / Bioquímica</option><option>Tecnología Médica</option><option>Otro profesional de salud</option></select></label>
+<label>Público participante<select id="publicoParticipante"><option value="">Seleccione</option><option>Docentes</option><option>Madres, padres o cuidadores</option><option>Docentes y familias</option><option>Estudiantes</option><option>Comunidad educativa</option><option>Otro</option></select></label>
+<label>N.º aproximado de participantes<input id="numeroParticipantes" type="number" min="0" step="1"></label>
+</div></div>
+<label>Descripción / objetivo de la actividad<textarea id="descripcionActividad" placeholder="Capacitación, promoción, campaña u otra actividad realizada"></textarea></label>
+<div class="actions"><button class="btn" onclick="App.guardarActividad()">Guardar actividad</button></div>
+<div id="estadoActividad" class="result">Sin actividad activa.</div>
+</section>
 
 <section id="capacitacion" class="section">
 <span class="badge">Promoción y prevención</span><h2>Capacitación</h2>
@@ -28,6 +54,7 @@
 <section id="observacion" class="section">
 <span class="badge">Escuela y comunidad · prevención</span><h2>Registro preventivo de observaciones</h2>
 <p class="small">Registre características observables y cambios respecto al funcionamiento habitual. No se asignan puntajes, ponderaciones, probabilidades ni colores de riesgo.</p>
+<p class="small"><strong>Para el docente u observador:</strong> responda según lo observado en el funcionamiento habitual del estudiante. Este registro no constituye un diagnóstico.</p>
 <label>Código del estudiante/caso<input id="codigoCasoObservacion" autocomplete="off" placeholder="Código no identificatorio"></label>
 <div class="grid"><div>
 <label class="check"><input type="checkbox" data-alerta-escolar data-dominio="energia" value="fatiga">Fatiga o cansancio frecuente</label>
@@ -40,9 +67,9 @@
 <label class="check"><input type="checkbox" data-alerta-escolar data-dominio="emocional" value="irritabilidad">Irritabilidad o cambio socioemocional persistente</label>
 <label class="check"><input type="checkbox" data-alerta-escolar data-dominio="social" value="retraimiento">Apatía, retraimiento o menor interacción</label>
 <label class="check"><input type="checkbox" data-alerta-escolar data-dominio="fisico" value="palidez">Palidez observable</label>
-<label>Persistencia<select id="persistencia"><option value="no">No / ocasional</option><option value="si">Sí / repetida</option></select></label>
-<label>Cambio respecto al funcionamiento habitual<select id="cambioHabitual"><option value="no">No</option><option value="si">Sí</option></select></label>
-<label>Interferencia en actividades habituales<select id="interferencia"><option value="ninguna">Ninguna</option><option value="leve">Leve</option><option value="marcada">Marcada</option></select></label>
+<label>¿Estos cambios se han observado varias veces?<select id="persistencia"><option value="no">No / solo una vez</option><option value="si">Sí / en varias ocasiones</option></select></label>
+<label>¿Representan un cambio respecto a cómo suele estar o comportarse el estudiante?<select id="cambioHabitual"><option value="no">No</option><option value="si">Sí</option></select></label>
+<label>¿Estos cambios afectan sus actividades escolares habituales?<select id="interferencia"><option value="ninguna">No se observa afectación</option><option value="leve">Afectación leve</option><option value="marcada">Afectación marcada</option></select></label>
 </div></div>
 <div class="actions"><button class="btn" onclick="TamizajeDocente.registrar()">Registrar observaciones</button></div>
 <div id="resultadoEscolar" class="result">Sin registro de observaciones.</div>
@@ -72,13 +99,38 @@
 <label>Código del estudiante/caso<input id="codigoEstudiante" autocomplete="off"></label>
 <label>Fecha de nacimiento<input id="fechaNacimiento" type="date"></label>
 <label>Fecha de evaluación<input id="fechaEvaluacion" type="date"></label>
-<label>Grado / referencia escolar<input id="grado"></label>
+<label>Grado escolar
+<select id="grado">
+<option value="">Seleccione</option>
+<optgroup label="Primaria">
+<option value="1.º de primaria">1.º de primaria</option>
+<option value="2.º de primaria">2.º de primaria</option>
+<option value="3.º de primaria">3.º de primaria</option>
+<option value="4.º de primaria">4.º de primaria</option>
+<option value="5.º de primaria">5.º de primaria</option>
+<option value="6.º de primaria">6.º de primaria</option>
+</optgroup>
+<optgroup label="Secundaria">
+<option value="1.º de secundaria">1.º de secundaria</option>
+<option value="2.º de secundaria">2.º de secundaria</option>
+<option value="3.º de secundaria">3.º de secundaria</option>
+<option value="4.º de secundaria">4.º de secundaria</option>
+<option value="5.º de secundaria">5.º de secundaria</option>
+</optgroup>
+</select>
+</label>
 </div><div>
-<label>Hemoglobina observada (g/dL)<input id="hbObservada" type="number" min="1" max="25" step="0.1"></label>
-<label>Altitud (m s. n. m.)<input id="altitud" type="number" min="0" max="5500" step="1" value="0"></label>
+<label>Hemoglobina observada (g/dL) <strong aria-hidden="true">*</strong>
+<input id="hbObservada" type="number" min="1" max="25" step="0.1" required aria-required="true">
+<span class="small">* Obligatorio. Ingrese el valor de hemoglobina medido en g/dL. Se utiliza en la evaluación hematológica y debe ser interpretado por personal de salud competente.</span>
+</label>
+<label>Altitud (m s. n. m.) <strong aria-hidden="true">*</strong>
+<input id="altitud" type="number" min="0" max="5500" step="1" value="0" required aria-required="true">
+<span class="small">* Obligatorio. Ingrese la altitud del lugar de residencia/evaluación en metros sobre el nivel del mar. Este dato permite aplicar, cuando corresponde, el ajuste de hemoglobina por altitud.</span>
+</label>
 </div></div>
 <div class="actions"><button class="btn" onclick="ClasificacionAnemia.evaluar();SeguimientoSalud.mostrar()">Registrar evaluación</button></div>
-<div id="resultadoSalud" class="result">Sin evaluación registrada.</div><p id="orientacionControl" class="small"></p>
+<div id="resultadoSalud" class="result">Aquí se mostrará el registro de la evaluación hematológica: edad calculada, hemoglobina observada, altitud consignada, ajuste por altitud cuando corresponda y hemoglobina ajustada. El resultado no determina por sí solo la causa de la anemia.</div><p id="orientacionControl" class="small"></p>
 </section>
 
 <section id="seguimiento" class="section">
@@ -92,7 +144,8 @@
 <label>Alerta / energía<select id="segAlerta"><option>Sin cambio</option><option>Mejoró</option><option>Empeoró</option></select></label>
 </div></div>
 <label>Observaciones<textarea id="segObservaciones"></textarea></label>
-<div class="actions"><button class="btn" onclick="SeguimientoEscolar.registrar()">Guardar seguimiento</button><button class="btn secondary" onclick="App.exportar()">Exportar respaldo local (JSON)</button></div>
+<div class="actions"><button class="btn" onclick="SeguimientoEscolar.registrar()">Guardar seguimiento</button><button class="btn secondary" onclick="App.exportarZIP()">Exportar respaldo ZIP</button><button class="btn secondary" onclick="document.getElementById('archivoRespaldo').click()">Importar respaldo</button><input id="archivoRespaldo" type="file" accept=".zip,.json,application/zip,application/json" hidden onchange="App.importarRespaldo(this.files[0]);this.value=''"></div>
+<div class="card"><h3>¿Qué contiene el respaldo?</h3><p class="small"><strong>Excel:</strong> para revisar, filtrar y trabajar los datos. <strong>CSV:</strong> para intercambio y análisis. <strong>JSON:</strong> conserva la estructura completa para respaldo y restauración y facilita reutilizar posteriormente los datos con R, Python, Power BI u otros programas de análisis o futuros módulos de investigación de SIP. No necesita conocer ni editar JSON.</p><p class="small">El respaldo puede servir como insumo para reportes o informe SERUMS. El uso posterior con fines de investigación no es automático y requiere el protocolo, protección de datos, autorizaciones y salvaguardas éticas que correspondan.</p></div>
 <div id="historialEscolar"></div>
 <p class="small"><strong>Privacidad y almacenamiento local:</strong> esta versión conserva la información registrada únicamente en el almacenamiento local del navegador/dispositivo y no envía estos registros a un servidor propio de SIP. La conservación, exportación, protección y eliminación quedan bajo responsabilidad del usuario profesional y de las disposiciones de su institución. Evite registrar datos identificatorios innecesarios y proteja especialmente la información de salud y la correspondiente a niñas, niños y adolescentes.</p>
 </section>
@@ -110,5 +163,5 @@
 </section>
 
 </main>
-<script src="js/data/normativa.js"></script><script src="js/core/paciente.js"></script><script src="js/escolar/tamizaje-docente.js"></script><script src="js/escolar/seguimiento-escolar.js"></script><script src="js/salud/altitud.js"></script><script src="js/salud/hemoglobina.js"></script><script src="js/salud/clasificacion-anemia.js"></script><script src="js/salud/seguimiento-salud.js"></script><script src="js/app.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script><script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script><script src="js/data/normativa.js"></script><script src="js/core/paciente.js"></script><script src="js/escolar/tamizaje-docente.js"></script><script src="js/escolar/seguimiento-escolar.js"></script><script src="js/salud/altitud.js"></script><script src="js/salud/hemoglobina.js"></script><script src="js/salud/clasificacion-anemia.js"></script><script src="js/salud/seguimiento-salud.js"></script><script src="js/app.js"></script>
 </body></html>
